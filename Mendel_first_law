@@ -33,7 +33,7 @@ def mendl_prop(dom, het, rec):
 
 def main():
     
-    with open("/home/kacper/Dokumenty/rosal/mendl1/rosalind_iprb.txt" ) as dane_in:
+    with open(".../rosalind_iprb.txt" ) as dane_in:
         k, m ,n = map(int, dane_in.read().strip().split())
     
     probability = str(mendl_prop(k,m,n))
@@ -62,7 +62,7 @@ def main():
     print(probability)
     print(probability_1)
     '''
-    with open ("/home/kacper/Dokumenty/rosal/mendl1/odp.txt", 'w') as dane_out:
+    with open (".../odp.txt", 'w') as dane_out:
         dane_out.write(probability)
     #print (f'{int(probability):.5f}')
     '''
