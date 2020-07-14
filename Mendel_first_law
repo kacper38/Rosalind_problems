@@ -1,0 +1,70 @@
+from scipy.misc import comb
+
+def mendl_prop(dom, het, rec):
+    """
+    liczba możliwych wydarzeń rozmych mieszanek alleli 
+    wybieramy n z k , wielomianem newtona   n z 2
+    funkcja comb ze scipy.misc
+    mnozymyrazy 4 bo z jednej kryzowki mamy 4 mozliwosci
+    
+    liczba zdarzeń z wystąpieniem allelu recesywnego
+    4 zdarzenia gdy krzyrzujemy   rec x rec,
+    2 zdrzenia na kazda krzyzowke rec  x het,
+    i liczba zdarzeń krzyżówek het x het
+    
+    szukane prawdopodobienstwo to 
+        1 - liczba zdarzen allel rec / liczba zdarzen
+        
+    pobiera 3 wartosci 
+        dom - liczba homozygot dominujacych
+        het - liczba heterozygot
+        rec - liczba homozygot recesywnych
+    """
+    #liczba mozliwych genotypow 
+    k = 4*comb((dom + het + rec), 2)
+    
+    #osobniki bez allela dominujacego
+    n = 4 * comb(het, 2) + 2*het*rec + comb(het,2)
+
+    #zwracam prawdopodobienstwo osobnika z allelem 
+    #dominujacym poprzez podanie dopelnienia do jedynki
+    return (1- n/k)
+
+
+def main():
+    
+    with open("/home/kacper/Dokumenty/rosal/mendl1/rosalind_iprb.txt" ) as dane_in:
+        k, m ,n = map(int, dane_in.read().strip().split())
+    
+    probability = str(mendl_prop(k,m,n))
+    
+    #second way:
+    n_total = k+m+n
+    
+    # all possibilities of mating that can give 2 recessive alleles
+    rec_x_rec = (n/n_total)*((n-1)/(n_total-1))
+    rec_x_het = (n/n_total)*(m/(n_total-1)) + (m/n_total)*(n/(n_total-1))
+    het_x_het = (m/n_total) * ((m-1)/(n_total-1))
+    #in rec_x_rec we have 100% recessive alleli
+    #in rec_x_het we have 50%  recessive alleli
+    #in het_x_het we have 25%  recessive alleli
+    
+    #so sum of all occurences with 2 recessive alleles is
+    #sum of occurences multiplied by its probability
+    
+    rec_tot = rec_x_rec + rec_x_het*(0.5) + het_x_het*(0.25)
+    
+    #and to get final probability 
+    #is to substract the probability of opposite event
+    #this case its probability of 2 having recessive alleli 
+    #convert to string for optional output file
+    probability_1 = str(1-rec_tot)
+    print(probability)
+    print(probability_1)
+    '''
+    with open ("/home/kacper/Dokumenty/rosal/mendl1/odp.txt", 'w') as dane_out:
+        dane_out.write(probability)
+    #print (f'{int(probability):.5f}')
+    '''
+if __name__ == '__main__':
+    main()
