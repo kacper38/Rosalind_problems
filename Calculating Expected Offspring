@@ -1,0 +1,69 @@
+"""
+Created on Tue Jul 14 19:22:31 2020
+
+@author: kacper
+"""
+
+'''
+    i will use 'dom' for dominant phenotype
+    probabilities:
+        AA-AA -  2    dom
+        AA-Aa -  2    dom
+        AA-aa -  2    dom
+        Aa-Aa -  1.5  dom
+        Aa-aa -  1    dom
+        aa-aa -  0    dom
+        
+        so we can generate expected numer of offspring,
+        displaying the dominant phenotype in the next generation,
+        under the assumption every couple has 2 offspring.
+        
+        we can generate it by summing expected dom offspring,
+        for each couple with given genotype match.
+'''
+
+def E_X(int_list):
+    ''' int_list --> is a list with 6 integers corresponding
+            to the number of couples with given genotype.
+            
+    '''
+    
+    numbers = [2, 2, 2, 1.5, 1, 0]
+    
+    exp_off = [ x*y for x,y in zip(int_list, numbers) ]
+    exp_off1= [int_list[i] * numbers[i] for i in range(6) ]
+    re = sum(exp_off)
+    
+    return re
+
+def main():
+    
+    with open("/home/kacper/Dokumenty/rosal/calculating_expected_offspring/rosalind_iev.txt", 'r') as dane_in:
+        #rob_list = list(map(float, dane_in.read().strip().split() ) )
+        #if numbers of parents are separated by space
+        parents_n = [float(x) for x in dane_in.read().split()]
+        
+        #if seperated by ','
+        robo = []
+        for item in dane_in:
+            
+            line_stripped = item.strip()
+            line_list     = line_stripped.split(',')
+            for i in line_list:
+                if i.isdigit() == True:
+                    robo.append(float(i))     
+    print(E_X(parents_n))
+    #print(E_X(robo))
+    with open("/home/kacper/Dokumenty/rosal/calculating_expected_offspring/odp.txt",'w') as odpow:
+        odpow.write(str(E_X(parents_n)))
+        
+    #test    
+    #test1 = E_X(rob_list)
+    #print(test1)
+    '''
+    test = [1, 0, 0, 1, 0, 1 ]
+    ans = E_X(test)
+    print(ans)
+    '''
+if __name__ == '__main__':
+    main()
