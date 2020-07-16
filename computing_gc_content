@@ -1,0 +1,44 @@
+def gc_count(string):
+    """
+        computes a GC content in given string
+    """
+    count = 0
+    for o in string:
+        if o == 'G' or o == 'C':
+            count +=1
+    return count/len(string)*100
+
+def read_fasta(data):
+    head, seq = None, []
+    
+    for line in data:
+        line = line.rstrip()
+        if line.startswith(">"):
+            if head: yield (head, ''.join(seq))
+            head, seq = line[1:], []
+        else:
+            seq.append(line)
+    if head: yield(head, ''.join(seq))
+    
+def biggest_count(data):
+    win_name=''
+    win_count=0
+    for n, s in read_fasta(data):
+        gcco = gc_count(s)
+        if gcco > win_count:
+            win_count = gcco
+            win_name = n
+    return win_name, win_count
+    
+def main():
+with open("/home/kacper/Dokumenty/rosal/computing_gc_content/rosalind_gc.txt") as data_in:
+        
+        header,content = biggest_count(data_in)
+        print(f'{header}\n{content:.6f}')
+        
+        
+        
+ if __name__ == '__main__':
+    main()
+        
+        
