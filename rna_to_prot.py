@@ -35,12 +35,12 @@ def rprotein_string(RNA_string):
     return protein_string
 
 def main():
-    with open("/home/kacper/Dokumenty/rosal/rna_to_protein/rosalind_prot.txt") as data_in:
+    with open(".../rosalind_prot.txt") as data_in:
         rna_string = data_in.read().rstrip()
         
      #   print(f'{rprotein_string(rna_string)}')
         
-    with open("/home/kacper/Dokumenty/rosal/rna_to_protein/odp.txt",'w') as dane_out:
+    with open(".../odp.txt",'w') as dane_out:
         dane_out.write(rprotein_string(rna_string))
     print(rprotein_string('AUGGCCAUGGCGCCCAGAACUGAGAUCAAUAGUACCCGUAUUAACGGGUGA'))
     assert rprotein_string('AUGGCCAUGGCGCCCAGAACUGAGAUCAAUAGUACCCGUAUUAACGGGUGA') == 'MAMAPRTEINSTRING'
