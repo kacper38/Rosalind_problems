@@ -20,10 +20,10 @@ def motif_find(data_in):
 
 def main():
     
-    with open("/home/kacper/Dokumenty/rosal/finding_motif/rosalind_subs.txt") as dane_in:
+    with open(".../rosalind_subs.txt") as dane_in:
         x = dane_in.read().rstrip().split('\n')
     
-    with open("/home/kacper/Dokumenty/rosal/finding_motif/odp.txt", "w") as dane_out:
+    with open(".../odp.txt", "w") as dane_out:
 
         for item in motif_find(x):
             dane_out.write(str(item)+' ')
