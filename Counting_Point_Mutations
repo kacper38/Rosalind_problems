@@ -1,0 +1,32 @@
+"""
+Created on Wed Jul 29 20:40:21 2020
+
+@author: kacper
+"""
+
+def hamming_dist(tab):
+    '''
+    calculates hamming distance between given DNA strings
+    
+    input -> tab , array containing 2 strings, correspondings,
+    to two DNA strings
+    '''
+    hd = 0
+    for x in range(len(tab[0])):
+        if tab[0][x] != tab[1][x]:
+            hd+=1
+    return hd
+
+
+def main():
+    
+    with open("/.../rosalind_hamm.txt") as dane_in:
+        w1=[]
+        for line in dane_in:
+            w1.append(line.rstrip()) 
+    with open("/.../odp.txt","w") as dane_out:
+        dane_out.write(str(hamming_dist(w1)))
+
+         
+if __name__ == '__main__' :
+    main()
