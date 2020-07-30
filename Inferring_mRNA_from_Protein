@@ -1,0 +1,59 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Thu Jul 30 22:25:25 2020
+
+@author: kacper
+"""
+from collections import Counter
+
+def rna_inf(protein_string):
+    '''
+    input  -> protein_string of length at most 1000 aa
+    return -> The total number of different
+        RNA strings from which the protein
+        could have been translated, modulo 1,000,000.
+    3 stop codons so 3 times other variations
+    using simple multiplication rule
+    as for every protein there are x options
+    so for protein string there are 3 * x * x1 * x2 ...
+    and so on, 3 is from 3 possible stop codons
+    '''
+    
+    rna_codons = {'UUU':'F','CUU':'L','AUU':'I','GUU':'V',
+           'UUC':'F'   ,'CUC':'L','AUC':'I','GUC':'V',
+           'UUA':'L'   ,'CUA':'L','AUA':'I','GUA':'V',
+           'UUG':'L'   ,'CUG':'L','AUG':'M','GUG':'V',
+           'UCU':'S'   ,'CCU':'P','ACU':'T','GCU':'A',
+           'UCC':'S'   ,'CCC':'P','ACC':'T','GCC':'A',
+           'UCA':'S'   ,'CCA':'P','ACA':'T','GCA':'A',
+           'UCG':'S'   ,'CCG':'P','ACG':'T','GCG':'A',
+           'UAU':'Y'   ,'CAU':'H','AAU':'N','GAU':'D',
+           'UAC':'Y'   ,'CAC':'H','AAC':'N','GAC':'D',
+           'UAA':'Stop','CAA':'Q','AAA':'K','GAA':'E',
+           'UAG':'Stop','CAG':'Q','AAG':'K','GAG':'E',
+           'UGU':'C'   ,'CGU':'R','AGU':'S','GGU':'G',
+           'UGC':'C'   ,'CGC':'R','AGC':'S','GGC':'G',
+           'UGA':'Stop','CGA':'R','AGA':'R','GGA':'G',
+           'UGG':'W'   ,'CGG':'R','AGG':'R','GGG':'G'} 
+    vdic1 = Counter(rna_codons.values())
+    mtp = 3
+    
+    for letter in protein_string:
+        mtp *= vdic1[letter]
+    return (mtp%(10**6))
+
+def main():
+    
+    with open("/.../rosalind_mrna.txt", 'r') as dane_in:
+        rps = str(dane_in.read().rstrip())
+        
+    with open("/.../odp.txt",'w') as dane_out:
+        dane_out.write(str(rna_inf(rps)))
+    
+    
+if __name__ == "__main__":
+    main()
+
+
+    
