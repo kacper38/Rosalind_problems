@@ -1,0 +1,76 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Mon Nov  2 16:38:34 2020
+
+@author: kacper
+"""
+
+dataset = """
+>Rosalind_14
+ACGTACGTGACG
+>Rosalind_18
+GTA
+"""
+
+t1 = "ACGTACGTGACG"
+t2 = "GTA"
+
+
+
+def read_fasta(fp):
+    name, seq = None, []
+    for line in fp:
+        line = line.rstrip()
+        if line.startswith(">"):
+            if name: yield (name, ''.join(seq))
+            name, seq = line, []
+        else:
+            seq.append(line)
+    if name: yield (name, ''.join(seq))
+
+
+
+
+def find_first(s,t):
+    
+    lsd = []    
+    for item in t:
+        if item in s:
+            if len(lsd) == 0 :
+                gu = s.index(item)
+                lsd.append(gu+1)
+                #print(t1.index(item))
+            else:
+                lsd.append(s.index(item,gu)+1)
+                gu = s.index(item, gu)
+    return lsd
+        
+def find_ss(s,t):
+    i, j = 0,0
+    index_tab = []
+    
+    while j< len(t):
+        while s[i] != t[j]:
+            i +=1
+        index_tab.append(i)
+        i +=1
+        j +=1
+        
+    return index_tab
+
+def main():
+    x = []
+    with open("rosalind_sseq.txt") as fp:
+        for _,s in read_fasta(fp):
+            x.append(s)
+    
+    s,t = x[0], x[1]
+
+    indexes = find_ss(s,t)
+    print(" ".join(str(index + 1) for index in indexes))
+    #print(*listed, sep=' ')
+
+if __name__ == '__main__':
+    main()
+        
